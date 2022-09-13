@@ -1,0 +1,55 @@
+package com.xxxx.crm.controller;
+
+nb      * @param saleChanceQuery
+     * @return
+     */
+
+    @GetMapping("list")
+    @ResponseBody
+    public Map<String, Object> queryByParams(SaleChanceQuery saleChanceQuery){
+        return saleChanceService.queryByParams(saleChanceQuery);
+    }
+
+    /**
+     * 打开营销管理页面
+     * @param
+     * @return
+     */
+
+
+    @RequestMapping("index")
+    public String index(){
+        return "saleChance/sale_chance";
+    }
+
+
+    /**
+     * 打开营销机会修改/添加页面
+     * @param id
+     * @param request
+     * @return
+     */
+    @RequestMapping("toAddUpdatePage")
+    public String toAddUpdatePage(Integer id,HttpServletRequest request){
+        //如果是修改操作，那么需要将修改的而数据映射在页面中
+     if (id!=null){
+         SaleChance saleChance = saleChanceService.selectByPrimaryKey(id);
+         AssertUtil.isTrue(saleChance==null,"数据异常，请重试");
+         request.setAttribute("saleChance",saleChance);
+     }
+     return "saleChance/add_update";
+
+
+ }
+
+    /**
+     * 添加数据
+     * @param request
+     * @param saleChance
+     * @return
+     */
+
+
+ @PostMapping("save")
+@ResponseBody
+    public ResultInfo save(HttpServletRequest request,SaleChance saleChance)
